@@ -1,4 +1,5 @@
-var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+// var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson"
 
 // Grab JSON data 
 d3.json(url, function(data){
