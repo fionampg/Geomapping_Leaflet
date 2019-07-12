@@ -1,6 +1,28 @@
 // var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson"
 
+// Function for marker size
+function markerSize(mag){
+  return mag * 10000;
+}
+
+// Function for marker color
+function markerColor(mag){
+  if (mag <= 1) {
+    return "#ADFF2F";
+  } else if (mag <= 2){
+    return "#9ACD32";
+  } else if (mag <=3){
+    return "#FFFF00";
+  } else if (mag <=4) {
+    return "#FFD700";
+  } else if (mag <=5) {
+    return "#FFA500";
+  } else {
+    return "#FF0000"; 
+  };
+}
+
 // Grab JSON data 
 d3.json(url, function(data){
     // console.log(data)
@@ -8,22 +30,52 @@ d3.json(url, function(data){
 })
 
 function createFeatures(earthquakeData){
-
-    // Define a function we want to run once for each feature in the features array
-    // Give each feature a popup describing the place and time of the earthquake
-  function onEachFeature(feature, layer) {
-    layer.bindPopup("<h3>" + feature.properties.place +
-      "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
-  }
+  //   // simple version, without colored markers
+  //   // Define a function we want to run once for each feature in the features array
+  //   // Give each feature a popup describing the place and time of the earthquake
+  //   function onEachFeature(feature, layer) {
+  //     layer.bindPopup("<h3>" + feature.properties.place +
+  //       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+  //   }
+    
+  //   // Create a GeoJSON layer containing the features array on the earthquakeData object
+  //   // Run the onEachFeature function once for each piece of data in the array
+  //   var earthquakes = L.geoJSON(earthquakeData, {
+  //     onEachFeature: onEachFeature
+  //   });
   
+  //   //Sending earthquake layer to the createMap function
+  //   createMap(earthquakes)
+  // }
+
+
+
+  // With markers according
   // Create a GeoJSON layer containing the features array on the earthquakeData object
   // Run the onEachFeature function once for each piece of data in the array
   var earthquakes = L.geoJSON(earthquakeData, {
-    onEachFeature: onEachFeature
+    // onEachFeature: onEachFeature
+    // Define a function we want to run once for each feature in the features array
+    // Give each feature a popup describing the place and time of the earthquake
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup("<h3>" + feature.properties.place +
+        "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" + 
+        "<p> Magnitude: " + feature.properties.mag + "</p>")
+      } , 
+      pointToLayer: function (feature, latlng){
+        return new L.circle(latlng, 
+          {radius: markerSize(feature.properties.mag), 
+          fillColor: markerColor(feature.properties.mag), 
+          fillOpacity: 1, 
+          stroke: false,
+          })
+      }
+  //end of earthquakes
   });
 
   //Sending earthquake layer to the createMap function
-  createMap(earthquakes)
+  createMap(earthquakes);
+// End of createFeatures function
 }
 
 function createMap(earthquakes){
