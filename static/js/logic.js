@@ -33,6 +33,7 @@ function createFeatures(earthquakeData){
   //   // simple version, without colored markers
   //   // Define a function we want to run once for each feature in the features array
   //   // Give each feature a popup describing the place and time of the earthquake
+  
   //   function onEachFeature(feature, layer) {
   //     layer.bindPopup("<h3>" + feature.properties.place +
   //       "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
@@ -40,6 +41,7 @@ function createFeatures(earthquakeData){
     
   //   // Create a GeoJSON layer containing the features array on the earthquakeData object
   //   // Run the onEachFeature function once for each piece of data in the array
+ 
   //   var earthquakes = L.geoJSON(earthquakeData, {
   //     onEachFeature: onEachFeature
   //   });
@@ -128,26 +130,6 @@ function createMap(earthquakes){
 
         var div = L.DomUtil.create("div", "info legend");
 
-        // var limits = geojson.options.limits;
-        // var colors = geojson.options.colors;
-        
-        // var labels = [];
-            
-        // // Add min & max
-        // var legendInfo = "<h1>Median Income</h1>" +
-        // "<div class=\"labels\">" +
-        //   "<div class=\"min\">" + limits[0] + "</div>" +
-        //   "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-        // "</div>";
-  
-        // div.innerHTML = legendInfo;
-  
-        // limits.forEach(function(limit, index) {
-        // labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-        // });
-  
-        // div.innerHTML += "<ul>" + labels.join("") + "</ul>";
-        // return div;
         magnitude = [0,1,2,3,4,5,6];
 
         for (var i = 0; i < magnitude.length; i++) {
