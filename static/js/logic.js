@@ -3,7 +3,7 @@ var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geo
 
 // Function for marker size
 function markerSize(mag){
-  return mag * 10000;
+  return mag * 5;
 }
 
 // Function for marker color
@@ -63,10 +63,11 @@ function createFeatures(earthquakeData){
         "<p> Magnitude: " + feature.properties.mag + "</p>")
       } , 
       pointToLayer: function (feature, latlng){
-        return new L.circle(latlng, 
+        return new L.circleMarker(latlng, 
           {radius: markerSize(feature.properties.mag), 
           fillColor: markerColor(feature.properties.mag), 
-          fillOpacity: 1, 
+          fillOpacity: 0.8,
+          opacity: 0.5, 
           stroke: false,
           })
       }
@@ -126,25 +127,37 @@ function createMap(earthquakes){
     legend.onAdd = function(){
 
         var div = L.DomUtil.create("div", "info legend");
-        var limits = geojson.options.limits;
-        var colors = geojson.options.colors;
-        var labels = [];
+
+        // var limits = geojson.options.limits;
+        // var colors = geojson.options.colors;
+        
+        // var labels = [];
             
-        // Add min & max
-        var legendInfo = "<h1>Median Income</h1>" +
-        "<div class=\"labels\">" +
-          "<div class=\"min\">" + limits[0] + "</div>" +
-          "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-        "</div>";
+        // // Add min & max
+        // var legendInfo = "<h1>Median Income</h1>" +
+        // "<div class=\"labels\">" +
+        //   "<div class=\"min\">" + limits[0] + "</div>" +
+        //   "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        // "</div>";
   
-        div.innerHTML = legendInfo;
+        // div.innerHTML = legendInfo;
   
-        limits.forEach(function(limit, index) {
-        labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-        });
+        // limits.forEach(function(limit, index) {
+        // labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+        // });
   
-        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
-        return div;
+        // div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+        // return div;
+        magnitude = [0,1,2,3,4,5,6];
+
+        for (var i = 0; i < magnitude.length; i++) {
+          div.innerHTML +=
+              '<i style="background:' + markerColor(magnitude[i] + 1) + '"></i> ' +
+              magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+');
+        }
+  
+      return div;
+    //end function of legend    
     };
   
     // Adding legend to the map
