@@ -1,6 +1,7 @@
 # Geomapping_Leaflet
 Visualize earthquake data from the USGS website
 
+Link: https://fionampg.github.io/Geomapping_Leaflet/index.html
 
 A Leaflet map that shows earthquake data from the United States Geological Survey (USGS) website, by longitude and latitude.
 The USGS is responsible for providing scientific data about natural hazards, the health of our ecosystems and environment; and the impacts of climate and land-use change.
